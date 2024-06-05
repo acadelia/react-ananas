@@ -23,7 +23,6 @@ const Register = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formState);
   };
   return (
         <div className={styles.login}>
