@@ -4,6 +4,6 @@ import { Dashboard } from './Pages';
 
 test('renders learn react link', () => {
   render(<Dashboard />);
-  const linkElement = screen.getByText(/SignUp/i);
+  const linkElement = screen.getByText(/Dashboard, to be done later/i);
   expect(linkElement).toBeInTheDocument();
 });
