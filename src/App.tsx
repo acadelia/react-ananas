@@ -1,28 +1,23 @@
-// import React from 'react';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
 import React from "react";
 import "./App.css";
-import { useRoutes, BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login, Register, Dashboard } from './Pages';
+import { ProtectedRoute } from './utils/protectedRoute';
+import { NotFound } from './components'
 
 const AppRoutes = () => {
-  const routes = useRoutes([
-    { path: "/", element: <Dashboard /> },
-    { path: "/login", element: <Login /> },
-    { path: "/register", element: <Register /> },
-  ]);
-  return routes;
+  return (
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Dashboard />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
+  );
 };
 
 const App = () => {
@@ -34,5 +29,19 @@ const App = () => {
     </div>
   );
 };
+
+// function App() {
+//   return (
+//     <Routes>
+//       <Route element={<PrivateRoutes />}>
+//         <Route element={<Dashboard />} path='/' />
+//       </Route>
+//       <Route element={<PublicRoutes />}>
+//         <Route element={<Login />} path='/login' />
+//         <Route element={<Register />} path='/register' />
+//       </Route>
+//     </Routes>
+//   )
+// }
 
 export default App;

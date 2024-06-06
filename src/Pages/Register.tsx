@@ -1,14 +1,17 @@
 import { useState } from "react";
 import styles from '../styles/auth-style/auth.module.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthService from '../services/auth/auth'
 
 const initialFormState = {
-  username: '',
+  userName: '',
   email: '',
   password: '',
 };
 
 const Register = () => {
+
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -21,8 +24,14 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      const response = await AuthService.signUpAndLogin(formState);
+      const token = response.data;
+      navigate('/');
+    } catch (error) {
+    }
   };
   return (
         <div className={styles.login}>
@@ -36,7 +45,7 @@ const Register = () => {
               onChange={handleChange}
               name="username"
               id="username"
-              value={formState.username}
+              value={formState.userName}
               className={styles.login_input}
               placeholder="username"/>
           </div>
@@ -46,7 +55,7 @@ const Register = () => {
               onChange={handleChange}
               name="email"
               id="email"
-              value={formState.password}
+              value={formState.email}
               className={styles.login_input}
               placeholder="email"/>
           </div>

@@ -1,14 +1,22 @@
 import { useState } from "react";
 import styles from '../styles/auth-style/auth.module.css'
-import { Link } from "react-router-dom";
+import AuthService from '../services/auth/auth'
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const initialFormState = {
-  username: '',
+  email: '',
   password: '',
 };
 
+const errors = '';
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState(errors);
+
+  const navigate = useNavigate();
 
   // const [remember, setRemember] = useState(false);
 
@@ -21,8 +29,16 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      await AuthService.login(formState.email, formState.password);
+      navigate('/');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(error.response?.data?.message);
+      } 
+    }
   };
   
   return (
@@ -35,11 +51,14 @@ const Login = () => {
             <input
               type="text"
               onChange={handleChange}
-              name="username"
-              id="username"
-              value={formState.username}
+              name="email"
+              id="email"
+              value={formState.email}
               className={styles.login_input}
-              placeholder="username"/>
+              placeholder="email" />
+            <img
+              src="/assets/email.svg" alt="display password icon"
+              className={styles.login_email_icon}/>
           </div>
           <div className={styles.login_box}>
             <input
@@ -55,6 +74,7 @@ const Login = () => {
               className={styles.login_password_icon}
               onClick={() => setShowPassword((prev) => !prev)}/>
           </div>
+          <div className={styles.login_error_message}>{ errorMessage }</div>
         </div>
         <div className={styles.login_check}>
           <div className={styles.login_check_box}>
