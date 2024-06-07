@@ -1,20 +1,18 @@
 import { useState } from "react";
 import styles from '../styles/auth-style/auth.module.css'
-import { Link, useNavigate } from "react-router-dom";
-import AuthService from '../services/auth/auth'
+import { Link } from "react-router-dom";
+import { Input } from "../components";
+import { useRegister } from "../hooks";
 
 const initialFormState = {
-  userName: '',
+  username: '',
   email: '',
   password: '',
 };
 
 const Register = () => {
-
-  const navigate = useNavigate();
-
+  const { error, register } = useRegister();
   const [showPassword, setShowPassword] = useState(false);
-
   const [formState, setFormState] = useState(initialFormState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,59 +24,47 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await AuthService.signUpAndLogin(formState);
-      const token = response.data;
-      navigate('/');
-    } catch (error) {
-    }
+    await register(formState);
   };
   return (
-        <div className={styles.login}>
+    <div className={styles.login}>
       <img src="/assets/background-desktop.jpeg" alt="" className={styles.img}/>
       <form onSubmit={handleSubmit} className={styles.login_form}>
         <h1 className={styles.login_title}>Register</h1>
         <div className={styles.login_inputs}>
-          <div className={styles.login_box}>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="username"
-              id="username"
-              value={formState.userName}
-              className={styles.login_input}
-              placeholder="username"/>
-          </div>
-          <div className={styles.login_box}>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="email"
-              id="email"
-              value={formState.email}
-              className={styles.login_input}
-              placeholder="email"/>
-          </div>
-          <div className={styles.login_box}>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="password"
-              id="password"
-              value={formState.password}
-              className={styles.login_input}
-              placeholder="password" />
-            <img
-              src={showPassword ? "/assets/open-password.svg" : "/assets/close-password.svg"} alt="display password icon"
-              className={styles.login_password_icon}
-              onClick={() => setShowPassword((prev) => !prev)}/>
-          </div>
+          <Input
+            type="text"
+            value={formState.username}
+            onChange={handleChange}
+            name="username"
+            icon="/assets/user.svg"
+            className={styles.login_email_icon} 
+          />
+          <Input
+            type="text"
+            name="email"
+            value={formState.email}
+            onChange={handleChange}
+            icon="/assets/email.svg"
+            className={styles.login_email_icon} 
+          />
+          <Input
+            type={showPassword ? "text" : "password"}
+            value={formState.password}
+            onChange={handleChange}
+            name="password"
+            icon={showPassword ? "/assets/open-password.svg" : "/assets/close-password.svg"}
+            onIconClick={() => setShowPassword((prev) => !prev)}
+            className={styles.login_password_icon} 
+          />
+          <div className={styles.login_error_message}>{ error }</div>
         </div>
         <div className={styles.login_check}>
           <div className={styles.login_check_box}>
             <input type="checkbox" className={styles.login_check_input} id="user-check"/>
             <label htmlFor="user-check" className={styles.login_check_label}>Remember me</label>
           </div>
+          <Link to="/404" className={styles.login_register_link}>Can't Register?</Link>
         </div>
         <button type="submit" className={styles.login_button}>Register</button>
         <div className={styles.login_register}>

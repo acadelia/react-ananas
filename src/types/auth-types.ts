@@ -5,13 +5,11 @@ export interface AuthResponse {
   };
 }
 
-interface AuthBody {
+export interface LoginBody {
   email: string;
   password: string;
 }
 
-export interface LoginBody extends AuthBody {}
-
-export interface SignUpBody extends AuthBody {
-  userName: string;
+export interface SignUpBody extends LoginBody {
+  username: string;
 }

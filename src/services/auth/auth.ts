@@ -15,7 +15,7 @@ class AuthService {
     return response;
   }
 
-  signUpAndLogin(formData: SignUpBody) {
+  register(formData: SignUpBody) {
     const loginBody: LoginBody = {
       email: formData.email,
       password: formData.password,
@@ -26,12 +26,8 @@ class AuthService {
     });
   }
 
-  login(email:string, password:string) {
-    const body = {
-      email: email,
-      password: password,
-    };
-    return axios.post(loginApi, body).then(this.handleAuthResponse);
+  login(formData: LoginBody) {
+    return axios.post(loginApi, formData).then(this.handleAuthResponse);
   }
 
   signOut() {
@@ -49,6 +45,9 @@ class AuthService {
         tokenService.saveToken(token.accessToken);
       }
       return response;
+    })
+    .catch((error) => {
+        window.location.href = '/login';
     });
   }
 }
