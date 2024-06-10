@@ -3,6 +3,7 @@ import styles from '../styles/auth-style/auth.module.css'
 import { Link } from "react-router-dom";
 import { Input } from "../components";
 import { useRegister } from "../hooks";
+import BackgroundImage from "../components/BackgroundImage";
 
 const initialFormState = {
   username: '',
@@ -28,7 +29,7 @@ const Register = () => {
   };
   return (
     <div className={styles.login}>
-      <img src="/assets/background-desktop.jpeg" alt="" className={styles.img}/>
+      <BackgroundImage/>
       <form onSubmit={handleSubmit} className={styles.login_form}>
         <h1 className={styles.login_title}>Register</h1>
         <div className={styles.login_inputs}>

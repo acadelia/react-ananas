@@ -1,4 +1,5 @@
 import tokenService from '../../utils/token';
+import storageService from '../../utils/storage';
 import axios from '../../axiosConfig';
 import { AuthResponse, LoginBody, SignUpBody } from '../../types';
 
@@ -9,9 +10,10 @@ const refreshTokenApi = '/refreshToken';
 class AuthService {
 
   handleAuthResponse(response: AuthResponse) {
-    const { accessToken, refreshToken } = response.data;
+    const { accessToken, refreshToken, userId } = response.data;
     tokenService.saveToken(accessToken);
     tokenService.saveRefreshToken(refreshToken);
+    storageService.saveUser(userId);
     return response;
   }
 
@@ -32,6 +34,7 @@ class AuthService {
 
   signOut() {
     tokenService.signOut();
+    storageService.removeUser();
   }
 
   refreshToken() {

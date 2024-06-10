@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Dashboard } from './Pages';
+import App from './App';
 
 test('renders learn react link', () => {
-  render(<Dashboard />);
-  const linkElement = screen.getByText(/Dashboard, to be done later/i);
-  expect(linkElement).toBeInTheDocument();
+  render(<App />);
+  const imageBackgroundElement = screen.getByAltText('background-img');
+  expect(imageBackgroundElement).toBeInTheDocument();
 });

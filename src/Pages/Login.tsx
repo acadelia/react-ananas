@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from '../styles/auth-style/auth.module.css'
 import { Link } from "react-router-dom";
 import { Input } from "../components";
 import { useLogin } from "../hooks";
+import BackgroundImage from "../components/BackgroundImage";
 
 const initialFormState = {
   email: '',
@@ -14,6 +15,14 @@ const Login = () => {
   const { error, login } = useLogin();
 //const [remember, setRemember] = useState(false);
   const [formState, setFormState] = useState(initialFormState);
+  const [redirectToHome, setRedirectToHome] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      setRedirectToHome(true);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({
@@ -26,10 +35,14 @@ const Login = () => {
     e.preventDefault();
     await login(formState);
   };
+
+  if (redirectToHome) {
+    window.location.href = '/';
+  }
   
   return (
     <div className={styles.login}>
-      <img src="/assets/background-desktop.jpeg" alt="" className={styles.img}/>
+      <BackgroundImage />
       <form onSubmit={handleSubmit} className={styles.login_form}>
         <h1 className={styles.login_title}>Login</h1>
         <div className={styles.login_inputs}>
