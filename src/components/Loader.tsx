@@ -1,7 +1,11 @@
+import styles from "../styles/components-style/loader.module.css";
 import React from 'react'
-import styles from '../styles/components-style/spinner.module.css'
 
-export default function Spinner() {
+type Loader = {
+  message: string | undefined;
+};
+
+export const Loader: React.FC<Loader> = ({ message }) => {
   return (
     <div className={styles.body}>
       <div className={styles.spinner}>

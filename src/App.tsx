@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login, Register, Dashboard, Friends, Profile } from './Pages';
 import { ProtectedRoute } from './utils/protectedRoute';
-import { NotFound, Spinner } from './components'
+import { NotFound } from './components'
 
 const AppRoutes = () => {
   return (
@@ -15,7 +15,6 @@ const AppRoutes = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/friends" element={<Friends />} />
           <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/loading" element={<Spinner />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

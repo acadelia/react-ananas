@@ -1,56 +1,15 @@
-// import React, { useState } from 'react';
-// import storageService from '../../utils/storage';
-// import PostService from '../../services/post-data';
-// import styles from '../../styles/components-style/post.module.css';
-
-// const userId = storageService.getUser() || '';
-
-// const CreatePost: React.FC = () => {
-//   const [image, setImage] = useState<File | null>(null);
-//   const [imageLoading, setImageLoading] = useState(false);
-
-//   const handleFileUpload = (event: any) => {
-//     setImageLoading(true);
-//     const file = event.target.files[0];
-//     setImage(file);
-//     setImageLoading(false);
-//   };
-
-//   const handlePostUpload = async (e: any) => {
-//     const file = e.target.files[0];
-//     try {
-//       await PostService.createNewPost(file);
-//     } catch (error) {
-//     }
-//   };
-
-//   return (
-//     <div className={styles.createPost}>
-//       <div className={styles.createPostForm}>
-//         <div>
-//           {imageLoading ? <p>Loading...</p> : image && <img className={styles.profileImage} src={URL.createObjectURL(image)} alt="Profile" />}
-//         </div>
-//         <input type="file" onChange={handlePostUpload} />
-//         <button onClick={handlePostUpload}>Make a new post</button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CreatePost;
 import React, { useState } from 'react';
 import PostService from '../../services/post-data';
 import styles from '../../styles/components-style/post.module.css';
 
-const CreatePost = () => {
+const CreatePost = ({ onPostCreated }: { onPostCreated: () => void }) => {
   const [image, setImage] = useState<File | null>(null);
-  const [imageLoading, setImageLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const handleFileUpload = (event: any) => {
-    setImageLoading(true);
     const file = event.target.files[0];
     setImage(file);
-    setImageLoading(false);
+    setImageUrl(URL.createObjectURL(file));
   };
 
   const handlePostUpload = async () => {
@@ -58,18 +17,31 @@ const CreatePost = () => {
       try {
         await PostService.createNewPost(image);
         setImage(null); 
+        setImageUrl(null);
+        onPostCreated(); 
       } catch (error) {
       }
     }
   };
 
+  const handleImageClick = () => {
+    const inputElement = document.createElement('input');
+    inputElement.type = 'file';
+    inputElement.accept = 'image/*';
+    inputElement.onchange = handleFileUpload;
+    inputElement.click();
+  };
+
   return (
-    <div className={styles.createPost}>
-      <div className={styles.createPostForm}>
-        <div>
-          {imageLoading ? <p>Loading...</p> : image && <img className={styles.profileImage} src={URL.createObjectURL(image)} alt="Profile" />}
+    <div className={styles.create_post}>
+      <div className={styles.create_post_form}>
+        <div className={styles.post_image}>
+          <img
+            src={imageUrl ? imageUrl : "/image-plus.svg"}
+            alt="Default img upload"
+            className={styles.added_image}
+            onClick={handleImageClick} />
         </div>
-        <input type="file" onChange={handleFileUpload} />
         <button onClick={handlePostUpload}>Make a new post</button>
       </div>
     </div>
