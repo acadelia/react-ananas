@@ -1,3 +1,7 @@
+p {
+  margin: 0;
+}
+
 .profile_image {
   background-color: white;
   width: 40px;
@@ -9,4 +13,76 @@
 .profile_image:hover {
   cursor: pointer;
   box-shadow: 0px 0px 21px 3px hsla(226, 100%, 73%, 0.692);
+}
+
+.add_friend_button {
+  position: absolute;
+  bottom: 3px;
+  right: 83px;
+  background-color: #93a7ff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add_friend_button:hover {
+  background-color: #4b65da;
+}
+
+.user_box {
+  height: 130px;
+  position: relative;
+  width: 70%;
+  max-width: 250px;
+  margin-bottom: 10px;
+  margin-inline: 1.5rem;
+  background-color: hsla(0, 0%, 100%, .3);
+  border: 2px solid hsla(226, 100%, 73%, 0.528);
+  padding: 1rem;
+  color: var(--white-color);
+  border-radius: 1rem;
+  backdrop-filter: blur(56px);
+  box-shadow: 1px 0px 48px 2px hsla(226, 100%, 73%, 0.692);
+}
+
+.display_users {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.profile_user {
+  position: relative;
+}
+
+.error_message {
+  min-height: 30px;
+  visibility: hidden;
+}
+
+.error_message_show {
+  font-size: 12px;
+  color: rgb(255, 67, 145);
+  visibility: visible;
+}
+
+.profile_description {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 210px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.profile_low_box {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
 }

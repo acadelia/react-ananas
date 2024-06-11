@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Input } from "../components";
 import { useLogin } from "../hooks";
 import BackgroundImage from "../components/BackgroundImage";
+import AuthService from "../services/auth/auth";
+import tokenService from '../utils/token'
 
 const initialFormState = {
   email: '',
@@ -18,7 +20,7 @@ const Login = () => {
   const [redirectToHome, setRedirectToHome] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
+    const token = tokenService.getToken();
     if (token) {
       setRedirectToHome(true);
     }
@@ -37,6 +39,7 @@ const Login = () => {
   };
 
   if (redirectToHome) {
+    AuthService.signOut();
     window.location.href = '/';
   }
   

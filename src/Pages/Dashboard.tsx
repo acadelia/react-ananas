@@ -1,14 +1,15 @@
 import Feed from '../components/dashboard/Feed';
+import { LoadingProvider } from '../context/LoadingContext';
 import styles from '../styles/components-style/dashboard.module.css'
 
 const Dashboard = () => {
 
   return (
-    <div className={styles.dashboard_parent} >
-      <div className={styles.dashboard_ch}>
+    <LoadingProvider>
+      <div className={styles.main} >
         <Feed/>
       </div>
-    </div>
+    </LoadingProvider>
   );
 };
 

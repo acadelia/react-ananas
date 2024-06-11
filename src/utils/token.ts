@@ -16,7 +16,8 @@ class TokenService {
   }
 
   signOut() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   }
 }
 

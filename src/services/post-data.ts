@@ -28,6 +28,12 @@ class PostService {
     });
   }
 
+  getPostsStatistic(userId: string) {
+    return axios.get(`${posts}statistics/${userId}`).then((response) => {
+      return response;
+    });
+  };
+
   async createNewPost(file: File) {
     try {
       const formData = new FormData();

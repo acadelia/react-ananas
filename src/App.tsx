@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Login, Register, Dashboard } from './Pages';
+import { Login, Register, Dashboard, Friends, Profile } from './Pages';
 import { ProtectedRoute } from './utils/protectedRoute';
-import { NotFound } from './components'
+import { NotFound, Spinner } from './components'
 
 const AppRoutes = () => {
   return (
@@ -13,6 +13,9 @@ const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/friends" element={<Friends />} />
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/loading" element={<Spinner />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -29,19 +32,5 @@ const App = () => {
     </div>
   );
 };
-
-// function App() {
-//   return (
-//     <Routes>
-//       <Route element={<PrivateRoutes />}>
-//         <Route element={<Dashboard />} path='/' />
-//       </Route>
-//       <Route element={<PublicRoutes />}>
-//         <Route element={<Login />} path='/login' />
-//         <Route element={<Register />} path='/register' />
-//       </Route>
-//     </Routes>
-//   )
-// }
 
 export default App;

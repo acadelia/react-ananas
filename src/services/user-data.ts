@@ -1,7 +1,7 @@
 import axios from '../axiosConfig';
 import storageService from '../utils/storage';
 
-const detailsApi = '/users/details';
+const detailsApi = '/users/';
 const getUserApi = '/users/';
 const uploadApi = '/profile-picture/';
 const getProfilePictureApi = '/profile-picture/';
@@ -9,13 +9,13 @@ const userId = storageService.getUser();
 
 class DataService {
 
-  getUser() {
+  getUser(userId: string) {
     return axios.get(`${getUserApi}${userId}`).then((response) => {
       return response;
     });
   }
 
-  getDetails() {
+  getAllUsers() {
     return axios.get(detailsApi).then((response) => {
       return response;
     });
